@@ -3,200 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificação de Segurança</title>
+    <title>Verificação de Segurança de Elite</title>
     <style>
+        :root {
+            --bg-color: #050508;
+            --card-bg: rgba(23, 25, 35, 0.8);
+            --accent-color: #007AFF;
+            --success-color: #00c853;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
         }
 
         body {
-            background-color: #0d0e12;
-            color: white;
+            background: radial-gradient(circle at top right, #1a1b2e, #050508);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            padding: 20px;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        .main-container {
-            width: 100%;
-            max-width: 400px;
+        /* Container Principal */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 40px;
+            width: 90%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .card {
-            background-color: #1a1c24;
-            border-radius: 24px;
-            padding: 32px 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .label {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            padding: 6px 12px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            width: fit-content;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .label-dot {
-            height: 6px;
-            width: 6px;
-            background-color: rgba(255, 255, 255, 0.6);
+        .shield-icon {
+            background: rgba(0, 122, 255, 0.1);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 24px;
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 122, 255, 0.2);
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
         }
 
-        p.info {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 32px;
+        p.description {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 35px;
         }
 
-        .verification-box {
-            background-color: #21242e;
-            border-radius: 16px;
+        /* Botão de Verificação Ultra Moderno */
+        .verify-btn {
+            background: linear-gradient(145deg, #232631, #181a25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 20px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .verification-box:hover {
-            background-color: #262933;
-        }
-
-        .checkbox-custom {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            margin-right: 16px;
-            display: flex;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .verify-btn:active {
+            transform: translateY(0);
+        }
+
+        .checkbox {
+            width: 26px;
+            height: 26px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            margin-right: 15px;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
 
-        .checkbox-custom::after {
-            content: '';
-            width: 12px;
-            height: 6px;
-            border-left: 2px solid white;
-            border-bottom: 2px solid white;
-            transform: rotate(-45deg);
-            display: none;
-        }
-
-        .status {
+        .btn-text {
             font-size: 16px;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .redirect {
+        /* Estado de Sucesso */
+        .verify-btn.completed {
+            background: rgba(0, 200, 83, 0.1);
+            border-color: var(--success-color);
+        }
+
+        .verify-btn.completed .checkbox {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .verify-btn.completed .checkbox::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .verify-btn.completed .btn-text {
+            color: var(--success-color);
+        }
+
+        .loading-dots {
             display: none;
-            color: rgba(255, 255, 255, 0.6);
             font-size: 12px;
-            margin-top: 4px;
+            color: var(--text-dim);
+            margin-top: 8px;
         }
 
-        .footer-info {
-            color: rgba(255, 255, 255, 0.4);
-            text-align: center;
-            font-size: 12px;
-            margin-top: 24px;
-            padding: 0 16px;
-        }
-
-        /* Estilo para quando estiver marcado */
-        .verification-box.checked .checkbox-custom {
-            background-color: #00c853; /* Verde do TikTok */
-            border-color: #00c853;
-        }
-
-        .verification-box.checked .checkbox-custom::after {
+        .completed + .loading-dots {
             display: block;
         }
 
-        .verification-box.checked .redirect {
-            display: block;
+        .footer-trust {
+            margin-top: 35px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class="header">
-        <div>22:14</div>
-        <div style="display: flex; gap: 4px;">Tiktok</div>
+<div class="glass-card">
+    <div class="shield-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
     </div>
 
-    <div class="card">
-        <div class="label">
-            <div class="label-dot"></div>
-            VERIFICAÇÃO DE SEGURANÇA
-        </div>
+    <h1>Verificação de Segurança</h1>
+    <p class="description">Para proteger sua conexão e garantir o acesso seguro, confirme sua identidade abaixo.</p>
 
-        <h1>Verifique se você não é um robô</h1>
+    <div class="verify-btn" id="mainAction">
+        <div class="checkbox" id="checkCircle"></div>
+        <span class="btn-text" id="btnText">Verificar Identidade Agora</span>
+    </div>
+    
+    <div class="loading-dots" id="loader">Redirecionando para o servidor seguro...</div>
 
-        <p class="info">Para continuar com segurança, confirme sua verificação abaixo.</p>
-
-        <div class="verification-box" id="verificationBox">
-            <div class="checkbox-custom"></div>
-            <div>
-                <div class="status" id="statusText">Verificação concluída</div>
-                <div class="redirect" id="redirectText">Redirecionando você...</div>
-            </div>
-        </div>
-
-        <p class="footer-info">Após a confirmação, você será redirecionado automaticamente.</p>
+    <div class="footer-trust">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        SISTEMA DE PROTEÇÃO CRIPTOGRAFADO
     </div>
 </div>
 
 <script>
-    // Parâmetros de UTM que você quer enviar
+    // Configurações
+    const telegramBotUrl = "https://paylume.fans/l/810c8929"; // Mude para o seu bot
     const utmParams = "utm_source=tiktok&utm_campaign=__CAMPAIGN_NAME__|__CAMPAIGN_ID__&utm_medium=__AID_NAME__|__AID__&utm_content=__CID_NAME__|__CID__&utm_term=__PLACEMENT__&utm_id=__CAMPAIGN_ID__&shk=nxpa6rpq";
 
-    // Link do seu bot do Telegram
-    const telegramBotUrl = "https://paylume.fans/l/810c8929"; // Substitua pelo link do seu bot
+    const actionBtn = document.getElementById('mainAction');
+    const btnText = document.getElementById('btnText');
+    const loader = document.getElementById('loader');
 
-    const verificationBox = document.getElementById('verificationBox');
-    const statusText = document.getElementById('statusText');
-    const redirectText = document.getElementById('redirectText');
+    actionBtn.addEventListener('click', function() {
+        if(this.classList.contains('completed')) return;
 
-    verificationBox.addEventListener('click', function() {
-        // Altera o estilo da caixa para "marcado"
-        verificationBox.classList.add('checked');
-        statusText.innerText = "Verificação concluída"; // Atualiza o texto, se necessário
+        // Feedback Visual Imediato
+        this.classList.add('completed');
+        btnText.innerText = "Verificação Concluída";
+        loader.style.display = "block";
 
-        // Aguarda um pequeno delay para a animação visual e redireciona
-        setTimeout(function() {
-            window.location.href = telegramBotUrl + "?" + utmParams;
-        }, 1500); // Redireciona após 1.5 segundos
+        // Redirecionamento com UTMs
+        setTimeout(() => {
+            const finalUrl = `${telegramBotUrl}?${utmParams}`;
+            window.location.href = finalUrl;
+        }, 1200);
     });
 </script>
 
